@@ -1,4 +1,8 @@
+#ifdef LANG_CXX11_
+#include <unordered_map>
+#else
 #include <map>
+#endif //LANG_CXX11_
 #include <list>
 #include <string>
 #include <iostream>
@@ -64,7 +68,13 @@ class LRUCache : public Cache<K, V> {
     return (table_.find(key) != table_.end());
   }
  private:
+ 
+ #ifdef LANG_CXX11_ 
+  std::unordered_map<K, std::pair<V, typename std::list<K>::iterator> > table_;
+ #else
   std::map<K, std::pair<V, typename std::list<K>::iterator> > table_;
+ #endif // LANG_CXX11_
+
   std::list<K> list_;
 };
 
